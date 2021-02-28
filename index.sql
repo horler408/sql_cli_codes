@@ -206,5 +206,42 @@ author LIKE "%Mark Twain%" OR author LIKE "%Samuel Langhorne Clemens%";
 SELECT author,title FROM classics WHERE
 author LIKE "Charles%" AND author NOT LIKE "%Darwin";
 
+SELECT Customers.CustomerName, Orders.QuantityOrdered, Products.ProductName
+FROM Customers JOIN Orders
+ON Customers.CustomerID = Orders.CustomerID
+JOIN Products
+ON Orders.ProductID = Products.ProductID
+
+--View
+--To create a view on the Orders table that lists the orders for 
+--a specific product (in this case, product P1) like this:
+CREATE VIEW P1Orders AS
+SELECT CustomerID, OrderID, Quantity
+FROM Orders
+WHERE ProductID = "P1"
+
+--The following query finds the orders for customer C1 using the 
+--view. This query will only return orders for product P1 made by the customer:
+SELECT CustomerID, OrderID, Quantity
+FROM P1Orders
+WHERE CustomerID = "C1";
+
+--A view can also join tables together. If you regularly needed 
+--to find the details of customers and the products that they've 
+--ordered, you could create a view based on the join query 
+--shown in the previous unit:
+CREATE VIEW CustomersProducts AS
+SELECT Customers.CustomerName, Orders.QuantityOrdered, Products.ProductName
+FROM Customers JOIN Orders
+ON Customers.CustomerID = Orders.CustomerID
+JOIN Products
+ON Orders.ProductID = Products.ProductID;
+
+--The following query finds the customer name and product names of all 
+--orders placed by customer C2, using this view:
+SELECT CustomerName, ProductName
+FROM CustomersProducts
+WHERE CustomerID = "C2"
+
 
 --DATABASE DESIGN

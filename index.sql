@@ -243,5 +243,95 @@ SELECT CustomerName, ProductName
 FROM CustomersProducts
 WHERE CustomerID = "C2"
 
+--AZURE MySql Codes
+-- Create a database
+-- DROP DATABASE IF EXISTS quickstartdb;
+CREATE DATABASE quickstartdb;
+USE quickstartdb;
 
+-- Create a table and insert rows
+DROP TABLE IF EXISTS inventory;
+CREATE TABLE inventory (id serial PRIMARY KEY, name VARCHAR(50), quantity INTEGER);
+INSERT INTO inventory (name, quantity) VALUES ('banana', 150);
+INSERT INTO inventory (name, quantity) VALUES ('orange', 154);
+INSERT INTO inventory (name, quantity) VALUES ('apple', 100);
+
+-- Read
+SELECT * FROM inventory;
+
+-- Update
+UPDATE inventory SET quantity = 200 WHERE id = 1;
+SELECT * FROM inventory;
+
+-- Delete
+DELETE FROM inventory WHERE id = 2;
+SELECT * FROM inventory;
+
+CREATE TABLE PEOPLE(NAME TEXT NOT NULL, AGE INT NOT NULL);
+INSERT INTO PEOPLE(NAME, AGE) VALUES ('Bob', 35);
+INSERT INTO PEOPLE(NAME, AGE) VALUES ('Sarah', 28);
+CREATE TABLE LOCATIONS(CITY TEXT NOT NULL, STATE TEXT NOT NULL);
+INSERT INTO LOCATIONS(CITY, STATE) VALUES ('New York', 'NY');
+INSERT INTO LOCATIONS(CITY, STATE) VALUES ('Flint', 'MI');
+
+-- Create a new table called 'customers'
+CREATE TABLE customers(
+    customer_id SERIAL PRIMARY KEY,
+    name VARCHAR (50) NOT NULL,
+    location VARCHAR (50) NOT NULL,
+    email VARCHAR (50) NOT NULL
+);
+\l to list databases.
+\dt to list the tables in the current database.
+-- Insert rows into table 'customers'
+INSERT INTO customers
+    (customer_id, name, location, email)
+VALUES
+    ( 1, 'Orlando', 'Australia', ''),
+    ( 2, 'Keith', 'India', 'keith0@adventure-works.com'),
+    ( 3, 'Donna', 'Germany', 'donna0@adventure-works.com'),
+    ( 4, 'Janet', 'United States','janet1@adventure-works.com');
+
+--Azure SQL Database
+IF NOT EXISTS (
+   SELECT name
+   FROM sys.databases
+   WHERE name = N'TutorialDB'
+)
+CREATE DATABASE [TutorialDB];
+GO
+    
+ALTER DATABASE [TutorialDB] SET QUERY_STORE=ON;
+GO
+
+-- Switch to the TutorialDB database
+USE [TutorialDB]
+GO
+
+-- Create a new table called 'Customers' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.Customers', 'U') IS NOT NULL
+DROP TABLE dbo.Customers;
+GO
+
+-- Create the table in the specified schema
+CREATE TABLE dbo.Customers
+(
+   CustomerId        INT    NOT NULL   PRIMARY KEY, -- primary key column
+   Name      [NVARCHAR](50)  NOT NULL,
+   Location  [NVARCHAR](50)  NOT NULL,
+   Email     [NVARCHAR](50)  NOT NULL
+);
+GO
+    
+-- Insert rows into table 'Customers'
+INSERT INTO dbo.Customers
+   ([CustomerId],[Name],[Location],[Email])
+VALUES
+   ( 1, N'Orlando', N'Australia', N''),
+   ( 2, N'Keith', N'India', N'keith0@adventure-works.com'),
+   ( 3, N'Donna', N'Germany', N'donna0@adventure-works.com'),
+   ( 4, N'Janet', N'United States', N'janet1@adventure-works.com');
+GO
 --DATABASE DESIGN
+
